@@ -4,10 +4,10 @@
     "module": "ES2020",
     "lib": ["ES2020", "DOM"],
     "outDir": "public/js",
-    "rootDir": "client/src",
+    "rootDir": ".",
     "strict": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "skipLibCheck": true
   },
-  "include": ["client/src"]
+  "include": ["client/src", "src/constants"]
 }
