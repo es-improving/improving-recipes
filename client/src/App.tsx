@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom'
 import RecipesPage from './pages/RecipesPage'
 import PantryPage from './pages/PantryPage'
+import AboutPage from './pages/AboutPage'
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -10,6 +11,7 @@ function Layout({ children }: { children: React.ReactNode }) {
         <nav>
           <NavLink to="/" end>Recipes</NavLink>
           <NavLink to="/pantry">Pantry</NavLink>
+          <NavLink to="/about">About</NavLink>
         </nav>
       </header>
       <main>{children}</main>
@@ -24,6 +26,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<RecipesPage />} />
           <Route path="/pantry" element={<PantryPage />} />
+          <Route path="/about" element={<AboutPage />} />
         </Routes>
       </Layout>
     </BrowserRouter>
