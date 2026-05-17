@@ -23,6 +23,9 @@ jobs:
             Review this pull request. Focus on correctness, edge cases,
             and security issues. Be terse. Skip praise. Post inline
             comments on specific lines and a short summary comment.
+            Also post one short summary comment at the end listing what you
+            checked, even if you found nothing.
           claude_args: |
-            --model claude-haiku-4-5
+            --model claude-sonnet-4-6
             --max-turns 50
+            --debug
