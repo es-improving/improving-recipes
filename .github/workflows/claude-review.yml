@@ -28,4 +28,10 @@ jobs:
           claude_args: |
             --model claude-sonnet-4-6
             --max-turns 50
-            --debug
+            --
+      - name: Upload Claude execution log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: claude-execution-output
+          path: ${{ steps.claude.outputs.execution_file }}
