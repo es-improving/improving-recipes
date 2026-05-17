@@ -23,15 +23,15 @@ jobs:
             Review pull request #${{ github.event.pull_request.number }} in
             ${{ github.repository }}.
 
+            Do not use any skills or slash commands. Review the PR directly
+            using gh pr view --json and gh pr diff.
+
             Review this pull request. Focus on correctness, edge cases,
             and security issues. Be terse. Skip praise. Post inline
             comments on specific lines and a short summary comment.
             Also post one short summary comment at the end listing what you
             checked, even if you found nothing.
-          claude_args: |
-            --model claude-sonnet-4-6
-            --max-turns 50
-            --allowedTools "Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr list:*),Bash(gh pr review:*),Bash(gh pr comment:*)"
+          claude_args: --model claude-sonnet-4-6 --max-turns 50 --allowedTools "Bash(gh pr view --json:*),Bash(gh pr diff:*),Bash(gh pr list:*),Bash(gh pr review:*),Bash(gh pr comment:*)"
 
       - name: Upload Claude execution log
         if: always()
