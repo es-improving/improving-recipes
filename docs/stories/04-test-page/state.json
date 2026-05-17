@@ -1,0 +1,16 @@
+{
+  "steps": [
+    {
+      "step": "create-story",
+      "complete": true
+    },
+    {
+      "step": "create-ac",
+      "complete": true
+    },
+    {
+      "step": "create-technical-plan",
+      "complete": true
+    }
+  ]
+}
