@@ -20,6 +20,9 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           prompt: |
+            Review pull request #${{ github.event.pull_request.number }} in
+            ${{ github.repository }}.
+
             Review this pull request. Focus on correctness, edge cases,
             and security issues. Be terse. Skip praise. Post inline
             comments on specific lines and a short summary comment.
