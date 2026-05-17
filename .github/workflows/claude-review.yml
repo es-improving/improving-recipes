@@ -31,7 +31,8 @@ jobs:
           claude_args: |
             --model claude-sonnet-4-6
             --max-turns 50
-            --
+            --allowedTools "Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr list:*),Bash(gh pr review:*),Bash(gh pr comment:*)"
+
       - name: Upload Claude execution log
         if: always()
         uses: actions/upload-artifact@v4
