@@ -6,10 +6,11 @@ on:
 jobs:
   review:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       contents: read
       pull-requests: write
-      issues: write
+      checks: read
     steps:
       - uses: actions/checkout@v4
         with:
@@ -31,7 +32,7 @@ jobs:
             comments on specific lines and a short summary comment.
             Also post one short summary comment at the end listing what you
             checked, even if you found nothing.
-          claude_args: --model claude-sonnet-4-6 --max-turns 50 --allowedTools "Bash(gh pr view --json:*),Bash(gh pr diff:*),Bash(gh pr list:*),Bash(gh pr review:*),Bash(gh pr comment:*)"
+          claude_args: --model claude-sonnet-4-6 --max-turns 50 --allowedTools "Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr list:*),Bash(gh pr review --comment:*)),Bash(gh pr comment:*)"
 
       - name: Upload Claude execution log
         if: always()
