@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
-import { recipesStore } from "../db";
+import { recipesStore, pantryStore } from "../db";
+import { enrichIngredients } from "../lib/enrichIngredients";
 
 const router = Router();
 
@@ -13,7 +14,14 @@ router.get("/:id", (req: Request, res: Response) => {
     res.status(404).json({ error: "Not found" });
     return;
   }
-  res.json(recipe);
+  const pantryItems = pantryStore.list();
+  const enrichedIngredients = enrichIngredients(recipe.ingredients, pantryItems);
+  res.json({
+    id: recipe.id,
+    title: recipe.title,
+    instructions: recipe.instructions,
+    ingredients: enrichedIngredients,
+  });
 });
 
 router.post("/", (req: Request, res: Response) => {
