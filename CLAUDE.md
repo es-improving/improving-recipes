@@ -6,21 +6,14 @@ Read [[README.md]] for greater context and what the application does.
 
 The stories and their accompaning artifacts are stored here: `docs/stories/{01}-story-name/`
 
-When you are done creating a plan, save it to `docs/stories/{plan-name-folder}/`
-
-The story flow is as follows:
-
-* create-story
-* create-ac
-* create-technical-plan
-* implement-story (not yet created)
-* update-documentation (skill not yet created)
+See [docs/story-system.md](story-system.md) for information on how the skills are ordered in this project.
 
 ## Technical Stack
 
 - **Runtime:** Node.js with TypeScript
 - **Backend:** Express 4 (`src/server.ts`) serving a REST API under `/api/recipes`
-- **Frontend:** Vanilla JS (`public/js/main.js`) + plain CSS, served as static files by Express
+- **Frontend:** React
+- **Testing:** Jest
 - **Data layer:** In-memory store (`src/db/memoryStore.ts`) — intentionally temporary, seeded with sample data, resets on restart.
 - **Build:** `tsc` compiles both server (`tsconfig.json`) and client (`tsconfig.client.json`) TypeScript; output goes to `dist/`
 - **Dev server:** `ts-node-dev` for the server (hot reload) + `tsc --watch` for client, run together via `concurrently`
