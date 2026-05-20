@@ -24,14 +24,8 @@ jobs:
             Review pull request #${{ github.event.pull_request.number }} in
             ${{ github.repository }}.
 
-            Do not use any skills or slash commands. Review the PR directly
-            using gh pr view --json and gh pr diff.
-
-            Review this pull request. Focus on correctness, edge cases,
-            and security issues. Be terse. Skip praise. Post a single
-            comment on the PR using gh pr comment summarizing your findings
-            and listing what you checked, even if you found nothing.
-          claude_args: --model claude-sonnet-4-6 --max-turns 15 --allowedTools "Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr list:*),Bash(gh pr comment:*)"
+            Read `.github/prompts/pr-review.md` for full instructions.
+          claude_args: --model claude-sonnet-4-6 --max-turns 15 --allowedTools "Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr list:*),Bash(gh pr comment:*),Read"
 
       - name: Upload Claude execution log
         if: always()
