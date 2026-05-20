@@ -3,11 +3,11 @@
     "target": "ES2022",
     "module": "commonjs",
     "outDir": "dist",
-    "rootDir": "src",
+    "rootDir": "server",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": ["src"]
+  "include": ["server"]
 }

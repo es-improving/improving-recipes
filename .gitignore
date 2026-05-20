@@ -1,5 +1,8 @@
 node_modules/
 dist/
 public/js/
+.playwright-mcp
+.audit-logs
 
+setup_promptfoo.sh
 improving-recipes-app-keypair.pem
