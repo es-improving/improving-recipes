@@ -1,7 +1,7 @@
 import request from 'supertest'
 import express from 'express'
 import recipesRouter from '../routes/recipes'
-import { recipesStore } from '../db'
+import { recipesStore, pantryStore } from '../db'
 
 const app = express()
 app.use(express.json())
@@ -17,21 +17,31 @@ describe('GET /api/recipes/:id', () => {
   it('returns enriched RecipeDetail for a valid recipe id', async () => {
     const recipes = recipesStore.list()
     const { id } = recipes[0]
-    const res = await request(app).get(`/api/recipes/${id}`)
-    expect(res.status).toBe(200)
-    expect(res.body).toMatchObject({
-      id,
-      title: expect.any(String),
-      instructions: expect.any(String),
-      ingredients: expect.any(Array),
-    })
-    for (const ingredient of res.body.ingredients) {
-      expect(ingredient).toMatchObject({
-        name: expect.any(String),
-        amount: expect.any(Number),
-        unit: expect.any(String),
-        status: expect.stringMatching(/^(available|partial|missing)$/),
+    // Seed a pantry item matching "Olive oil" (2 tbsp) in the first recipe so we
+    // can assert a specific status, not just that the field has some valid value.
+    const pantryItem = pantryStore.create({ name: 'Olive oil', quantity: 10, unit: 'tbsp' })
+    try {
+      const res = await request(app).get(`/api/recipes/${id}`)
+      expect(res.status).toBe(200)
+      expect(res.body).toMatchObject({
+        id,
+        title: expect.any(String),
+        instructions: expect.any(String),
+        ingredients: expect.any(Array),
       })
+      for (const ingredient of res.body.ingredients) {
+        expect(ingredient).toMatchObject({
+          name: expect.any(String),
+          amount: expect.any(Number),
+          unit: expect.any(String),
+          status: expect.stringMatching(/^(available|partial|missing)$/),
+        })
+      }
+      const oliveOil = res.body.ingredients.find((i: { name: string }) => i.name === 'Olive oil')
+      expect(oliveOil).toBeDefined()
+      expect(oliveOil.status).toBe('available')
+    } finally {
+      pantryStore.remove(pantryItem.id)
     }
   })
 
