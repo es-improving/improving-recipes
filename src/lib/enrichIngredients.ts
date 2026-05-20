@@ -23,7 +23,7 @@ export function enrichIngredients(
     return {
       ...ingredient,
       status: 'partial',
-      shortfall: ingredient.amount - match.quantity,
+      shortfall: Math.round((ingredient.amount - match.quantity) * 1000) / 1000,
     }
   })
 

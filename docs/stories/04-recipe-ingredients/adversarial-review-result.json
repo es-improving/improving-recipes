@@ -1,0 +1,1 @@
+{"pass": false, "summary": "Sort integration test can pass vacuously with 0-1 ingredients; no route-level AC-10 test; id! non-null assertion in RecipeDetailPage; client types duplicate server types."}

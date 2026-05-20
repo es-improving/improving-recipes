@@ -6,7 +6,7 @@ Read [[README.md]] for greater context and what the application does.
 
 The stories and their accompaning artifacts are stored here: `docs/stories/{01}-story-name/`
 
-See [docs/story-system.md](story-system.md) for information on how the skills are ordered in this project.
+See [docs/story-system.md](docs/story-system.md) for information on how the skills are ordered in this project. Every a new session is started, this MUST be read.
 
 ## Technical Stack
 

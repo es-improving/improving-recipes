@@ -8,7 +8,7 @@ function IngredientStatus({ ingredient }: { ingredient: EnrichedIngredient }) {
   if (ingredient.status === 'partial') {
     return (
       <span className="status-partial">
-        Short by {ingredient.shortfall} {ingredient.unit}
+        Short by {ingredient.shortfall ?? '?'} {ingredient.unit}
       </span>
     )
   }
@@ -17,9 +17,10 @@ function IngredientStatus({ ingredient }: { ingredient: EnrichedIngredient }) {
 
 export default function RecipeDetailPage() {
   const { id } = useParams<{ id: string }>()
-  const { recipe, loading } = useRecipe(id!)
+  const { recipe, loading, error } = useRecipe(id!)
 
   if (loading) return <p>Loading...</p>
+  if (error) return <p>Error: {error}</p>
   if (!recipe) return <p>Recipe not found.</p>
 
   return (
@@ -32,8 +33,8 @@ export default function RecipeDetailPage() {
         <p>No ingredients listed.</p>
       ) : (
         <ul>
-          {recipe.ingredients.map((ingredient) => (
-            <li key={ingredient.name}>
+          {recipe.ingredients.map((ingredient, index) => (
+            <li key={`${ingredient.name}-${index}`}>
               <span>
                 {ingredient.name} — {ingredient.amount} {ingredient.unit}
               </span>
