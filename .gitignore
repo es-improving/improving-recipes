@@ -3,6 +3,7 @@ dist/
 public/js/
 .playwright-mcp
 .audit-logs
+.claude/current-story
 
 setup_promptfoo.sh
 improving-recipes-app-keypair.pem

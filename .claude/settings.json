@@ -1,0 +1,63 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(adversarial-review)",
+      "Skill(create-ac)",
+      "Skill(create-story)",
+      "Skill(create-technical-plan)",
+      "Write(docs/stories/**)",
+      "Edit(docs/stories/**)",
+      "Write(.claude/current-story)",
+      "Edit(.claude/current-story)",
+      "Bash(bash .claude/scripts/new-story.sh *)",
+      "Bash(npm test *)"
+    ],
+    "deny": [
+      "Write(**/state.json)",
+      "Edit(**/state.json)",
+      "Bash(*state.json*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/enforce-skill-order.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/mark-step-complete.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|Edit|Write|Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/audit-log.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/audit-md-reads.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -4,10 +4,19 @@ import { PantryItem } from "../types/pantryItem";
 const store = new Map<string, PantryItem>();
 
 [
-  { id: randomUUID(), name: "All-purpose flour", quantity: 2, unit: "cups" },
-  { id: randomUUID(), name: "Butter", quantity: 1, unit: "pounds" },
-  { id: randomUUID(), name: "Eggs", quantity: 12, unit: "count" },
-  { id: randomUUID(), name: "Olive oil", quantity: 500, unit: "liters" },
+  // Margherita Pizza — available: pizza dough, crushed tomatoes, mozzarella, olive oil | missing: fresh basil
+  { id: randomUUID(), name: "Pizza dough", quantity: 2, unit: "count" },
+  { id: randomUUID(), name: "Crushed tomatoes", quantity: 1, unit: "cups" },
+  { id: randomUUID(), name: "Fresh mozzarella", quantity: 12, unit: "ounces" },
+  // Chicken Tikka Masala — available: chicken, yogurt, tomato purée, garlic, ginger, olive oil | partial: heavy cream | missing: garam masala
+  { id: randomUUID(), name: "Chicken breast", quantity: 2, unit: "pounds" },
+  { id: randomUUID(), name: "Plain yogurt", quantity: 1, unit: "cups" },
+  { id: randomUUID(), name: "Heavy cream", quantity: 0.5, unit: "cups" },
+  { id: randomUUID(), name: "Tomato purée", quantity: 1, unit: "cups" },
+  { id: randomUUID(), name: "Garlic", quantity: 8, unit: "count" },
+  { id: randomUUID(), name: "Ginger", quantity: 3, unit: "tablespoons" },
+  // Shared — used by both recipes
+  { id: randomUUID(), name: "Olive oil", quantity: 10, unit: "tablespoons" },
 ].forEach((item) => store.set(item.id, item));
 
 export const pantryStore = {

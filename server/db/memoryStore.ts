@@ -10,10 +10,10 @@ const store = new Map<string, Recipe>();
     instructions:
       "Preheat your oven to 475°F. Stretch the pizza dough on a floured surface to form a 12-inch circle, then transfer it to a greased baking sheet. Spread a thin layer of crushed tomatoes over the dough, leaving a half-inch border. Tear the mozzarella into pieces and distribute evenly over the sauce. Drizzle with olive oil and season with salt and pepper. Bake for 10–12 minutes until the crust is golden and the cheese is bubbling. Remove from the oven, scatter fresh basil leaves over the top, and serve immediately.",
     ingredients: [
-      { name: "Pizza dough", amount: 1, unit: "ball" },
+      { name: "Pizza dough", amount: 1, unit: "count" },
       { name: "Crushed tomatoes", amount: 0.5, unit: "cups" },
-      { name: "Fresh mozzarella", amount: 8, unit: "oz" },
-      { name: "Olive oil", amount: 2, unit: "tbsp" },
+      { name: "Fresh mozzarella", amount: 8, unit: "ounces" },
+      { name: "Olive oil", amount: 2, unit: "tablespoons" },
       { name: "Fresh basil", amount: 0.25, unit: "cups" },
     ],
   },
@@ -27,10 +27,10 @@ const store = new Map<string, Recipe>();
       { name: "Plain yogurt", amount: 0.5, unit: "cups" },
       { name: "Heavy cream", amount: 1, unit: "cups" },
       { name: "Tomato purée", amount: 1, unit: "cups" },
-      { name: "Garlic", amount: 4, unit: "cloves" },
-      { name: "Ginger", amount: 1, unit: "tbsp" },
-      { name: "Olive oil", amount: 2, unit: "tbsp" },
-      { name: "Garam masala", amount: 2, unit: "tsp" },
+      { name: "Garlic", amount: 4, unit: "count" },
+      { name: "Ginger", amount: 1, unit: "tablespoons" },
+      { name: "Olive oil", amount: 2, unit: "tablespoons" },
+      { name: "Garam masala", amount: 2, unit: "teaspoons" },
     ],
   },
 ].forEach((r) => store.set(r.id, r));
