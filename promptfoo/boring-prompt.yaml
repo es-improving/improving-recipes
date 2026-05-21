@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+description: 'Getting started'
+# Optionally set API keys here instead of exporting environment variables.
+# Never commit real keys to source control.
+# env:
+  # OPENAI_API_KEY: sk-pr...
+prompts:
+  - 'Convert the following English text to {{language}}: {{input}}'
+
+providers:
+  - openai:chat:gpt-5.5
+  - openai:chat:gpt-5.4-mini
+  - anthropic:messages:claude-sonnet-4-6
+  - anthropic:messages:claude-haiku-4-5
+
+tests:
+  - vars:
+      language: French
+      input: Hello world
+    assert:
+      - type: contains
+        value: 'Bonjour le monde'
+  - vars:
+      language: Spanish
+      input: Where is the library?
+    assert:
+      - type: icontains
+        value: 'Dónde está la biblioteca'

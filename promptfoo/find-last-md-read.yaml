@@ -1,0 +1,59 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+description: 'Test find-last-md-read skill: finds most recently read markdown file in an audit log'
+
+prompts:
+  - '{{request}}'
+
+providers:
+  - id: anthropic:claude-agent-sdk
+    label: opus-4-7
+    config: &skillConfig
+      model: claude-opus-4-7
+      working_dir: ../
+      setting_sources: ['project']
+      skills: ['find-last-md-read']
+      append_allowed_tools: ['Read']
+
+  - id: anthropic:claude-agent-sdk
+    label: sonnet-4-6
+    config:
+      <<: *skillConfig
+      model: claude-sonnet-4-6
+
+  - id: anthropic:claude-agent-sdk
+    label: haiku-4-5
+    config:
+      <<: *skillConfig
+      model: claude-haiku-4-5
+
+
+
+defaultTest:
+  options:
+    disableVarExpansion: true
+  assert:
+    - type: skill-used
+      value: find-last-md-read
+
+    # Output must identify the correct file and include a timestamp
+    - type: javascript
+      threshold: 1.0
+      value: |
+        const text = typeof output === 'string' ? output : JSON.stringify(output);
+        const hasFile = text.includes('docs/features/ingredient-management.md');
+        const hasTimestamp = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(text);
+        const pass = hasFile && hasTimestamp;
+        return {
+          pass,
+          score: pass ? 1 : 0,
+          reason: pass
+            ? 'Output identifies docs/features/ingredient-management.md with a timestamp'
+            : `Missing: ${[!hasFile && 'correct file', !hasTimestamp && 'ISO timestamp'].filter(Boolean).join(', ')}`,
+        };
+
+tests:
+  - description: Finds the last markdown file read in the audit log
+    vars:
+      request: >
+        Read .audit-logs/2026-05-21-audit-log.jsonl and tell me the most
+        recently read markdown file.

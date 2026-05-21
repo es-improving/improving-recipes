@@ -1,0 +1,59 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+description: 'Code review quality: does Claude produce a substantive critique of a source file?'
+
+prompts:
+  - '{{request}}'
+
+providers:
+  - id: anthropic:claude-agent-sdk
+    label: opus-4-7
+    config: &reviewConfig
+      model: claude-opus-4-7
+      working_dir: ../
+      setting_sources: ['project']
+      skills: ['critique-code']
+      append_allowed_tools: ['Read']
+
+  - id: anthropic:claude-agent-sdk
+    label: sonnet-4-6
+    config:
+      <<: *reviewConfig
+      model: claude-sonnet-4-6
+
+  - id: anthropic:claude-agent-sdk
+    label: haiku-4-5
+    config:
+      <<: *reviewConfig
+      model: claude-haiku-4-5
+
+defaultTest:
+  options:
+    disableVarExpansion: true
+  assert:
+    - type: skill-used
+      value: critique-code
+
+    - type: llm-rubric
+      value: >
+        The review identifies that data is lost when the server restarts —
+        the in-memory store has no persistence.
+
+    - type: llm-rubric
+      value: >
+        The review includes at least one concrete, actionable suggestion
+        (e.g. migrate to a database, add a persistence layer, use a file-based store).
+        Vague advice like "consider adding persistence" without any specifics does not count.
+
+    - type: llm-rubric
+      value: >
+        The review does not merely summarize what the code does.
+        It must identify at least one risk, limitation, or design concern
+        beyond restating the existing code structure.
+
+tests:
+  - description: Critiques server/db/memoryStore.ts for risks and limitations
+    vars:
+      request: >
+        Critique server/db/memoryStore.ts for risks
+    # vars:
+    #   filename: server/db/memoryStore.ts

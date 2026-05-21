@@ -2,7 +2,6 @@ node_modules/
 dist/
 public/js/
 .playwright-mcp
-.audit-logs
 .claude/current-story
 
 setup_promptfoo.sh
