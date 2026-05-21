@@ -15,9 +15,9 @@ Displays all recipes as a linked list. Fetches from `GET /api/recipes` via the `
 Displays a single recipe: title, instructions, and a per-ingredient availability breakdown. Fetches from `GET /api/recipes/:id` via the `useRecipe` hook, which returns enriched ingredient data.
 
 Each ingredient shows one of three statuses:
-- **In stock** — pantry quantity meets or exceeds the required amount
-- **Short by N unit** — pantry has some but not enough (shows the shortfall)
-- **Not in pantry** — ingredient is absent from the pantry entirely
+- **In stock** — pantry quantity meets or exceeds the required amount (displayed in green)
+- **Short by N unit** — pantry has some but not enough; shows the shortfall (displayed in red)
+- **Not in pantry** — ingredient is absent from the pantry entirely (displayed in red)
 
 ## Hooks
 

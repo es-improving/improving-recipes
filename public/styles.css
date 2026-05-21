@@ -162,3 +162,7 @@ li.inline-form button:hover {
 .status-partial {
   color: #c00;
 }
+
+.status-available {
+  color: #2d7a2d;
+}
