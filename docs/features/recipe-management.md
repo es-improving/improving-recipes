@@ -14,6 +14,8 @@ Displays all recipes as a linked list. Fetches from `GET /api/recipes` via the `
 
 Displays a single recipe: title, instructions, and a per-ingredient availability breakdown. Fetches from `GET /api/recipes/:id` via the `useRecipe` hook, which returns enriched ingredient data.
 
+Ingredients are displayed in a table with three columns: **Ingredient**, **Quantity**, and **Status**. The table uses light gray borders (`#d0d0d0`) and `6px 8px` cell padding, styled via the `.ingredients-table` class in `public/styles.css`.
+
 Each ingredient shows one of three statuses:
 - **In stock** — pantry quantity meets or exceeds the required amount (displayed in green)
 - **Short by N unit** — pantry has some but not enough; shows the shortfall (displayed in red)
