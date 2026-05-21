@@ -31,6 +31,16 @@
           }
         ],
         "_comment": "Enforces a skill not being used out of order."
+      },
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/block-secret-reads.sh"
+          }
+        ],
+        "_comment": "Blocks reads of secret files (.env, private keys, credentials, etc.)"
       }
     ],
     "PostToolUse": [
