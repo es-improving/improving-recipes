@@ -154,3 +154,11 @@ li.inline-form button:hover {
   font-size: 0.8rem;
   color: #c00;
 }
+
+.status-missing {
+  color: #c00;
+}
+
+.status-partial {
+  color: #c00;
+}
