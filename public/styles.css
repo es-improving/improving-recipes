@@ -166,3 +166,15 @@ li.inline-form button:hover {
 .status-available {
   color: #2d7a2d;
 }
+
+.ingredients-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.ingredients-table th,
+.ingredients-table td {
+  padding: 6px 8px;
+  border: 1px solid #d0d0d0;
+  text-align: left;
+}

@@ -32,17 +32,24 @@ export default function RecipeDetailPage() {
       {recipe.ingredients.length === 0 ? (
         <p>No ingredients listed.</p>
       ) : (
-        <ul>
-          {recipe.ingredients.map((ingredient, index) => (
-            <li key={`${ingredient.name}-${index}`}>
-              <span>
-                {ingredient.name} — {ingredient.amount} {ingredient.unit}
-              </span>
-              {' '}
-              <IngredientStatus ingredient={ingredient} />
-            </li>
-          ))}
-        </ul>
+        <table className="ingredients-table">
+          <thead>
+            <tr>
+              <th>Ingredient</th>
+              <th>Quantity</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {recipe.ingredients.map((ingredient, index) => (
+              <tr key={`${ingredient.name}-${index}`}>
+                <td>{ingredient.name}</td>
+                <td>{ingredient.amount} {ingredient.unit}</td>
+                <td><IngredientStatus ingredient={ingredient} /></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
     </div>
   )
