@@ -12,7 +12,7 @@ STORY_DIR=$(cat "$POINTER")
 STATE="$STORY_DIR/state.json"
 [ -f "$STATE" ] || exit 0
 
-# Only act on skills tracked in state.json — do-feature.md is the single source of truth
+# Only act on skills tracked in state.json — implement-feature.md is the single source of truth
 IN_STEPS=$(jq -r --arg skill "$SKILL" '.steps[] | select(.step == $skill) | .step' "$STATE")
 [ -z "$IN_STEPS" ] && exit 0
 
@@ -36,3 +36,8 @@ UPDATED=$(jq --arg step "$SKILL" '
 ' "$STATE")
 
 echo "$UPDATED" > "$STATE"
+
+ALL_DONE=$(echo "$UPDATED" | jq -r '[.steps[].complete] | all')
+if [ "$ALL_DONE" = "true" ]; then
+  rm "$POINTER"
+fi

@@ -14,7 +14,7 @@ STORY_DIR=$(cat "$POINTER")
 STATE="$STORY_DIR/state.json"
 [ -f "$STATE" ] || exit 0
 
-# Derive order from state.json — do-feature.md is the single source of truth
+# Derive order from state.json — implement-feature.md is the single source of truth
 IDX=$(jq -r --arg skill "$SKILL" '.steps | to_entries[] | select(.value.step == $skill) | .key' "$STATE")
 
 # Not a tracked skill — allow it

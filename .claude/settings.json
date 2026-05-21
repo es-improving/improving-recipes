@@ -5,6 +5,8 @@
       "Skill(create-ac)",
       "Skill(create-story)",
       "Skill(create-technical-plan)",
+      "Skill(create-unit-tests)",
+      "Skill(implement-story)",
       "Write(docs/stories/**)",
       "Edit(docs/stories/**)",
       "Write(.claude/current-story)",
@@ -27,7 +29,8 @@
             "type": "command",
             "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/enforce-skill-order.sh"
           }
-        ]
+        ],
+        "_comment": "Enforces a skill not being used out of order."
       }
     ],
     "PostToolUse": [
@@ -38,7 +41,8 @@
             "type": "command",
             "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/mark-step-complete.sh"
           }
-        ]
+        ],
+        "_comment": "Marks steps in the workflow complete."
       },
       {
         "matcher": "Bash|Edit|Write|Skill",
@@ -47,7 +51,8 @@
             "type": "command",
             "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/audit-log.sh"
           }
-        ]
+        ],
+        "_comment": "Logs all bash, edit, write, and skill calls."
       },
       {
         "matcher": "Read",
@@ -56,7 +61,8 @@
             "type": "command",
             "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/audit-md-reads.sh"
           }
-        ]
+        ],
+        "_comment": "Logs all reads of md files."
       }
     ]
   }

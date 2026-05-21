@@ -6,11 +6,19 @@ The story system enforces a sequential workflow for feature development. Each st
 
 ## Workflow Steps
 
+The workflow is split across two context windows to avoid role bleed between the product definition and technical implementation phases.
+
+**Phase 1 — `/define-feature`** (product definition)
 ```
-create-story → create-ac → create-technical-plan → create-unit-tests → implement-story → adversarial-review
+create-story → create-ac
 ```
 
-Each step is a Claude Code skill. A step cannot run until the previous one is marked complete.
+**Phase 2 — `/implement-feature`** (technical implementation)
+```
+create-technical-plan → create-unit-tests → implement-story → adversarial-review
+```
+
+Each step is a Claude Code skill. A step cannot run until the previous one is marked complete. Both phases share the same `state.json`, so Phase 2 picks up exactly where Phase 1 left off.
 
 ## Directory Structure
 
@@ -20,7 +28,8 @@ Each step is a Claude Code skill. A step cannot run until the previous one is ma
   agents/
     adversarial-reviewer.md
   commands/
-    do-feature.md        # slash command to initialize a new story
+    define-feature.md    # slash command for Phase 1: story definition
+    implement-feature.md        # slash command for Phase 2: technical implementation
     commit-message.md
     patch-story.md
   hooks/
@@ -88,7 +97,7 @@ Each story directory contains a `state.json` tracking which steps have completed
 ]
 ```
 
-The only way `state.json` changes is through the PostToolUse hook.
+The only way `state.json` changes is through the PostToolUse hook. **Claude must never read `state.json` in order to write it, nor attempt to edit or overwrite it directly.** Any such attempt will likely be blocked by permissions and will corrupt the workflow state.
 
 ### Hooks
 
@@ -109,14 +118,20 @@ Runs *after* a skill finishes successfully. It:
 1. Reads the skill name from the tool input (`tool_input.skill`).
 2. Finds that step in `state.json`.
 3. Sets `"complete": true` for that step.
+4. If all steps are now complete, deletes `.claude/current-story` to close out the workflow.
 
 This is the only write path into `state.json`.
 
 ## Starting a New Story
 
-A new story is initialized with the `/do-feature` slash command. It:
+**Phase 1** — Run `/define-feature <description>` in a fresh context window. It:
 1. Runs `.claude/scripts/new-story.sh <slug>`, which creates the story directory under `docs/stories/` and writes an initial `state.json` with all steps marked incomplete.
 2. Writes the absolute path of the new story directory to `.claude/current-story` (via the Write tool).
+3. Runs the `create-story` and `create-ac` skills sequentially.
+
+When Phase 1 is done, close the context window.
+
+**Phase 2** — Open a new context window and run `/implement-feature`. It reads `.claude/current-story`, checks `state.json` for the first incomplete step, and runs the remaining skills (`create-technical-plan` through `adversarial-review`).
 
 You can also run `new-story.sh` directly, but you must update `.claude/current-story` yourself afterward — the script only creates the folder and `state.json`.
 
